@@ -1,5 +1,3 @@
-
-
 import 'package:mi_cora/models/transaction_model.dart';
 import 'package:mi_cora/models/transaction_model_insert.dart';
 import 'package:mi_cora/services/cora_database.dart';
@@ -12,7 +10,7 @@ Future<List<TransactionModel>> obtenerTransacciones() async {
     return TransactionModel(
       id: maps[i]['id'],
       monto: maps[i]['monto'],
-      fecha: maps[i]['fecha'],
+      fecha: DateTime.parse(maps[i]['fecha'] as String),
       descripcion: maps[i]['descripcion'],
       tipo: maps[i]['tipo'],
       categoriaId: maps[i]['categoriaId'],
@@ -21,19 +19,15 @@ Future<List<TransactionModel>> obtenerTransacciones() async {
 }
 
 Future<void> insertartransaccion(TransactionModelInsert transaccion) async {
-  try {
-    final db = await DatabaseHelper().database;
-    await db.insert(
-      'transacciones',
-      {'monto': transaccion.monto, 'fecha': transaccion.fecha,
-      "descripcion":transaccion.descripcion, 
-      'tipo': transaccion.tipo, 
-      'categoriaId': transaccion.categoriaId},
-      conflictAlgorithm: ConflictAlgorithm.replace,
-    );
-  } catch (e) {
-    print('Error al insertar usuario: $e');
-  }
+  final db = await DatabaseHelper().database;
+  await db.insert(
+    'transacciones',
+    {'monto': transaccion.monto, 'fecha': transaccion.fecha.toIso8601String(),
+    "descripcion":transaccion.descripcion,
+    'tipo': transaccion.tipo,
+    'categoriaId': transaccion.categoriaId},
+    conflictAlgorithm: ConflictAlgorithm.replace,
+  );
 }
 
 Future<void> eliminarTransaccion(int id) async {
@@ -50,7 +44,7 @@ Future<void> actualizarTransaccion(TransactionModel transaccion) async {
     'transacciones',
     {
       'monto': transaccion.monto,
-      'fecha': transaccion.fecha,
+      'fecha': transaccion.fecha.toIso8601String(),
       'descripcion': transaccion.descripcion,
       'tipo': transaccion.tipo,
       'categoriaId': transaccion.categoriaId,
@@ -59,7 +53,4 @@ Future<void> actualizarTransaccion(TransactionModel transaccion) async {
     whereArgs: [transaccion.id],
   );
 }
-
-
-
 
