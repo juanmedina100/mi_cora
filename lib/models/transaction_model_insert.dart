@@ -5,7 +5,7 @@ class TransactionModelInsert {
   final String fecha;
   final String descripcion;
   final String tipo;
-  final categoriaId;
+  final String categoria;
 
   TransactionModelInsert({
     // required this.id,
@@ -13,6 +13,6 @@ class TransactionModelInsert {
     required this.fecha,
     required this.descripcion,
     required this.tipo,
-    required this.categoriaId,
+    required this.categoria,
   });
 }

@@ -25,19 +25,13 @@ class DatabaseHelper {
       version: 1,
       onCreate: (db, version) async {
         await db.execute('''
-          CREATE TABLE categorias (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            nombre TEXT NOT NULL,
-            
-          );
           CREATE TABLE transacciones (
           id INTEGER PRIMARY KEY AUTOINCREMENT,
           monto REAL NOT NULL,
           fecha TEXT NOT NULL,
           descripcion TEXT,
-          tipo TEXT CHECK(tipo IN ('ingreso', 'gasto')) NOT NULL,
-          categoria_id INTEGER,
-          FOREIGN KEY (categoria_id) REFERENCES categorias(id)
+          tipo TEXT NOT NULL,
+          categoria TEXT
         );
         ''');
         //icono TEXT NOT NULL

@@ -6,7 +6,7 @@ class TransactionModel {
   final String fecha;
   final String descripcion;
   final String tipo;
-  final categoriaId;
+  final String categoria;
 
   TransactionModel({
     required this.id,
@@ -14,6 +14,6 @@ class TransactionModel {
     required this.fecha,
     required this.descripcion,
     required this.tipo,
-    required this.categoriaId,
+    required this.categoria,
   });
 }
