@@ -7,12 +7,24 @@ class TransactionProvider with ChangeNotifier {
   List<TransactionModel> _transactions = [];
   double _totalExpenses = 0.0;
 
+
   List<TransactionModel> get transactions => _transactions;
   double get totalExpenses => _totalExpenses;
 
   TransactionProvider() {
-    _loadTransactions();
+    loadTransactions();
   }
+
+  Future<void> loadTransactions() async {
+      try {
+        _transactions = await obtenerTransacciones();
+        _calculateTotalExpenses();
+        notifyListeners();
+      } catch (e) {
+        print('Error al cargar transacciones: $e');
+      }
+    }
+
 
   Future<void> _loadTransactions() async {
     try {
@@ -32,12 +44,13 @@ class TransactionProvider with ChangeNotifier {
     try {
       final transaction = TransactionModelInsert(
         monto: newTransaction['monto'] as double,
-        fecha: newTransaction['fecha'] as DateTime,
+        fecha: newTransaction['fecha'] as String,
         descripcion: newTransaction['descripcion'] as String,
         tipo: newTransaction['tipo'] as String,
-        categoriaId: newTransaction['categoriaId'] as int?,
+        categoria: newTransaction['categoria'] as String,
       );
       await insertartransaccion(transaction);
+      debugPrint('Transacción añadida: $transaction');
       await _loadTransactions();
     } catch (e) {
       print('Error al añadir transacción: $e');
@@ -50,10 +63,10 @@ class TransactionProvider with ChangeNotifier {
         final transaction = TransactionModel(
           id: _transactions[index].id,
           monto: updatedTransaction['monto'] as double,
-          fecha: updatedTransaction['fecha'] as DateTime,
+          fecha: updatedTransaction['fecha'] as String,
           descripcion: updatedTransaction['descripcion'] as String,
           tipo: updatedTransaction['tipo'] as String,
-          categoriaId: updatedTransaction['categoriaId'] as int?,
+          categoria: updatedTransaction['categoria'] as String,
         );
         await actualizarTransaccion(transaction);
         await _loadTransactions();

@@ -10,10 +10,10 @@ Future<List<TransactionModel>> obtenerTransacciones() async {
     return TransactionModel(
       id: maps[i]['id'],
       monto: maps[i]['monto'],
-      fecha: DateTime.parse(maps[i]['fecha'] as String),
+      fecha:maps[i]['fecha'] as String,
       descripcion: maps[i]['descripcion'],
       tipo: maps[i]['tipo'],
-      categoriaId: maps[i]['categoriaId'],
+      categoria: maps[i]['categoria'],
     );
   });
 }
@@ -22,10 +22,10 @@ Future<void> insertartransaccion(TransactionModelInsert transaccion) async {
   final db = await DatabaseHelper().database;
   await db.insert(
     'transacciones',
-    {'monto': transaccion.monto, 'fecha': transaccion.fecha.toIso8601String(),
+    {'monto': transaccion.monto, 'fecha': transaccion.fecha,
     "descripcion":transaccion.descripcion,
     'tipo': transaccion.tipo,
-    'categoriaId': transaccion.categoriaId},
+    'categoria': transaccion.categoria},
     conflictAlgorithm: ConflictAlgorithm.replace,
   );
 }
@@ -44,10 +44,10 @@ Future<void> actualizarTransaccion(TransactionModel transaccion) async {
     'transacciones',
     {
       'monto': transaccion.monto,
-      'fecha': transaccion.fecha.toIso8601String(),
+      'fecha': transaccion.fecha,
       'descripcion': transaccion.descripcion,
       'tipo': transaccion.tipo,
-      'categoriaId': transaccion.categoriaId,
+      'categoria': transaccion.categoria,
     },
     where: 'id = ?',
     whereArgs: [transaccion.id],
