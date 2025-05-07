@@ -33,7 +33,6 @@ Future<List<TransactionFiltered>> obtenerTransaccionesUltimos6Meses() async {
     limit 6
     '''
   );
-  debugPrint("Transacciones filtradas_______service________: $maps");
   return List.generate(maps.length, (i) {
     return TransactionFiltered(
       periodo: maps[i]['periodo'],
@@ -88,7 +87,7 @@ Future<TransactionModel?> obtenerTransaccionPorId(int id) async {
     'transacciones',
     where: 'id = ?',
     whereArgs: [id],
-    limit: 1, // Solo queremos un resultado
+    limit: 1, 
   );
 
   if (maps.isNotEmpty) {
@@ -101,7 +100,7 @@ Future<TransactionModel?> obtenerTransaccionPorId(int id) async {
       categoria: maps[0]['categoria'],
     );
   } else {
-    return null; // Si no se encuentra el registro
+    return null; 
   }
 }
 

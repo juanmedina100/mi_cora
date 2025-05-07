@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mi_cora/models/transaction_filtered.dart';
 import 'package:mi_cora/providers/transactions_provider.dart';
-import 'package:mi_cora/screens/add/add_screen.dart';
 import 'package:mi_cora/screens/history/history_ecreen.dart';
 import 'package:mi_cora/utils/utils.dart';
 import 'package:mi_cora/widgets/no_data_available.dart';
@@ -42,7 +41,9 @@ class _HomeScreenState extends State<HomeScreen> {
 
     TransactionProvider myProvider = context.watch<TransactionProvider>();
     return Scaffold(
-      appBar: isLandscape==false ? AppBar(title: const Text('Mi cora app'),centerTitle: true,) : null,
+      appBar: isLandscape==false ? AppBar(title: const Text('Mi cora'),centerTitle: true,automaticallyImplyLeading: false,
+      // actions: [IconButton(onPressed: (){},icon: Icon(Icons.info),)],
+      ) : null,
       body: myProvider.totalExpenses == 0 ? 
       NoDataAvailable() :  
       SingleChildScrollView(
@@ -71,11 +72,8 @@ class _HomeScreenState extends State<HomeScreen> {
                         SizedBox(height: 10,),
                         SfCartesianChart(
                           primaryXAxis: CategoryAxis(),
-                          // Chart title
                           title: ChartTitle(text: 'Grafica de gastos'),
-                          // Enable legend
                           legend: Legend(isVisible: true),
-                          // Enable tooltip
                           tooltipBehavior: TooltipBehavior(enable: true),
                           series: <CartesianSeries<TransactionFiltered, String>>[
                             ColumnSeries<TransactionFiltered, String>(
@@ -83,7 +81,6 @@ class _HomeScreenState extends State<HomeScreen> {
                               xValueMapper: (TransactionFiltered sales, _) => sales.periodo,
                               yValueMapper: (TransactionFiltered sales, _) => sales.totalGastos,
                               name: 'Gastos',
-                              // Enable data label
                               dataLabelSettings: DataLabelSettings(isVisible: true),
                             ),
                       ],
@@ -102,8 +99,9 @@ class _HomeScreenState extends State<HomeScreen> {
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
             IconButton(
+              isSelected: true,
               iconSize: 40,
-              icon: Icon(Icons.home, color: Colors.white),
+              icon: Icon(Icons.home,),
               onPressed: () {
               },
             ),
@@ -128,7 +126,7 @@ class _HomeScreenState extends State<HomeScreen> {
             borderRadius: BorderRadius.circular(70),
           ),
           onPressed: (){
-            Navigator.push(context, MaterialPageRoute(builder: (context) => AddSpent(id: null,)));
+            Navigator.pushNamed(context, "/add", arguments: null);
           },
           child: Icon(Icons.add, size: 30, color: Colors.white),
         ),

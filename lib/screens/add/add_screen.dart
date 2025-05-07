@@ -2,10 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:mi_cora/models/categorie_model.dart';
-import 'package:mi_cora/models/transaction_model_insert.dart';
 import 'package:mi_cora/providers/transactions_provider.dart';
-import 'package:mi_cora/screens/history/history_ecreen.dart';
-import 'package:mi_cora/screens/home/home_screen.dart';
 import 'package:provider/provider.dart';
 
 
@@ -42,7 +39,7 @@ class _AddSpentState extends State<AddSpent> {
           child: Column(
             children: [
               const Text(
-                'Categorias',
+                'Categorías',
                 style: TextStyle(fontSize: 24),
               ),
               const SizedBox(height: 8),
@@ -166,12 +163,9 @@ class _AddSpentState extends State<AddSpent> {
                     );
                     if (pickedDate != null) {
                       setState(() {
-                        // Formatear la fecha seleccionada
                         String formattedDate = "${pickedDate.year}-${pickedDate.month.toString().padLeft(2, '0')}-${pickedDate.day.toString().padLeft(2, '0')}";
-                        // _fechaController = formattedDate
                         debugPrint(formattedDate);
-                        _fechaController.text = formattedDate; // Actualiza el controlador de texto
-                        // Aquí puedes guardar la fecha formateada en una variable o usarla como desees
+                        _fechaController.text = formattedDate; 
                       });
                     }
                         },
@@ -197,20 +191,19 @@ class _AddSpentState extends State<AddSpent> {
                       ),
                       SizedBox(height: 10),
                       TextFormField(
-                        decoration: InputDecoration(labelText: 'Categoria',border: OutlineInputBorder(),focusedBorder: OutlineInputBorder()),
+                        decoration: InputDecoration(labelText: 'Categoría',border: OutlineInputBorder(),focusedBorder: OutlineInputBorder()),
                         keyboardType: TextInputType.text,
                         controller: _categoriaController,
                         readOnly: true,
                         onTap: () async {
                             await _showModal(context);
                             setState(() {
-                              // _showModal(context);
                               _categoriaController.text = _selectedItem!;
                             });
                           },
                           validator: (value) {
                             if (value == null || value.isEmpty) {
-                              return 'Por favor ingresa una categoria';
+                              return 'Por favor ingresa una categoría';
                             }
                             return null;
                           },
@@ -225,16 +218,15 @@ class _AddSpentState extends State<AddSpent> {
                           CupertinoButton.filled(
                         onPressed: () async {
                           if (_formKey.currentState!.validate()) {
-                            // Aquí puedes agregar la lógica para guardar el gasto
                             final gasto = {
                               'monto': double.parse(_montoController.text),
                               'fecha': _fechaController.text,
                               'descripcion': _descripcionController.text,
-                              'tipo': 'Gasto', // o 'Ingreso' según corresponda
-                              'categoria': _categoriaController.text, // Cambia esto según tu lógica
+                              'tipo': 'Gasto', 
+                              'categoria': _categoriaController.text, 
                             };
                             if(widget.id != null) {
-                              gasto['id'] = widget.id!; // Agrega el ID si es necesario   
+                              gasto['id'] = widget.id!; 
                               await context.read<TransactionProvider>().editTransaction(widget.id!, gasto);
                               ScaffoldMessenger.of(context).showSnackBar(
                                 SnackBar(content: Text('Gasto actualizado',textAlign: TextAlign.center,),
@@ -256,14 +248,11 @@ class _AddSpentState extends State<AddSpent> {
                               SnackBar(content: Text('Por favor completa todos los campos'),backgroundColor: Colors.red[300],),
                             );
                           }
-                          // Aquí puedes agregar la lógica para guardar el gasto
-                          
                         },
                         child: Text('Guardar'),
                       ),
                         ],
                       ),
-                      
                     ],
                   ),
                 ),
@@ -274,7 +263,6 @@ class _AddSpentState extends State<AddSpent> {
       ),
       bottomNavigationBar: isLandscape==false ? BottomAppBar(
         shape: CircularNotchedRectangle(),
-        // color: Colors.blue,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
@@ -282,15 +270,14 @@ class _AddSpentState extends State<AddSpent> {
               iconSize: 40,
               icon: Icon(Icons.home, color: Colors.white),
               onPressed: () {
-                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const HomeScreen()));
+                Navigator.pushNamedAndRemoveUntil(context, "/home", (route) => false);
               },
             ),
             IconButton(
               iconSize: 40,
               icon: Icon(Icons.history, color: Colors.white),
               onPressed: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) => const HistoryScreen()));
-                // Acción para el botón de configuración
+                Navigator.pushNamed(context, "/history");
               },
             ),
           ],
