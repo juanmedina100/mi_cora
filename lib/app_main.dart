@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mi_cora/providers/transactions_provider.dart';
+import 'package:mi_cora/screens/add/add_screen.dart';
+import 'package:mi_cora/screens/history/history_ecreen.dart';
 import 'package:mi_cora/screens/home/home_screen.dart';
 import 'package:provider/provider.dart';
 
@@ -23,6 +25,12 @@ class _MyAppMainState extends State<MyAppMain> {
       ],
       builder: (context,_) {
         return MaterialApp(
+          routes: {
+            '/home': (context) => HomeScreen(),
+            '/add': (context) => const AddSpent(id: null),
+            '/history': (context) => const HistoryScreen(),
+          },
+          initialRoute: '/home',
           // title: 'Mi Cora',
           debugShowCheckedModeBanner: false,
           theme: ThemeData(
@@ -54,9 +62,9 @@ class _MyAppMainState extends State<MyAppMain> {
               ),
             ),
           ),
-          home: Scaffold(
-            body: HomeScreen(),
-          ),
+          // home: Scaffold(
+          //   body: HomeScreen(),
+          // ),
         );
       }
     );

@@ -2,9 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mi_cora/providers/transactions_provider.dart';
 import 'package:mi_cora/screens/add/add_screen.dart';
-import 'package:mi_cora/screens/home/home_screen.dart';
-import 'package:mi_cora/services/service_transaciones.dart';
-import 'package:mi_cora/utils/utils.dart';
 import 'package:mi_cora/widgets/history_horizontal.dart';
 import 'package:mi_cora/widgets/histoty_vertical.dart';
 import 'package:provider/provider.dart';
@@ -47,8 +44,8 @@ class _HistoryScreenState extends State<HistoryScreen> {
           ),
           CupertinoDialogAction(
             onPressed: () {
-              eliminarTransaccion(id); // Llama a la función de eliminación
-              Navigator.of(context).pop(); // Cierra el diálogo
+              eliminarTransaccion(id); 
+              Navigator.of(context).pop(); 
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
                   content: Text('Gasto eliminado'),
@@ -69,7 +66,6 @@ class _HistoryScreenState extends State<HistoryScreen> {
 
   @override
   Widget build(BuildContext context) {
-
     bool isLandscape = false;
     Orientation orientation = MediaQuery.of(context).orientation;
     if (orientation == Orientation.landscape) {
@@ -77,7 +73,6 @@ class _HistoryScreenState extends State<HistoryScreen> {
     } else {
       isLandscape = false;
     }
-  
     TransactionProvider myProvider = context.watch<TransactionProvider>();
     return Scaffold(
       appBar: AppBar(
@@ -93,19 +88,18 @@ class _HistoryScreenState extends State<HistoryScreen> {
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
             IconButton(
+              isSelected: false,
               iconSize: 40,
-              icon: Icon(Icons.home, color: Colors.white),
+              icon: Icon(Icons.home,color: Colors.white ),
               onPressed: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) => const HomeScreen()));
-                // Acción para el botón de inicio
+              Navigator.pushNamedAndRemoveUntil(context, "/home", (route) => false);
               },
             ),
             IconButton(
+              isSelected: true,
               iconSize: 40,
-              icon: Icon(Icons.history, color: Colors.white),
+              icon: Icon(Icons.history, ),
               onPressed: () {
-                // Navigator.push(context, MaterialPageRoute(builder: (context) => HistoryScreen()));
-                // Acción para el botón de configuración
               },
             ),
           ],

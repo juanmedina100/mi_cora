@@ -18,7 +18,7 @@ class DatabaseHelper {
 
   Future<Database> _initDatabase() async {
     final dbPath = await getDatabasesPath();
-    final path = join(dbPath, 'mi_base_de_datos.db');
+    final path = join(dbPath, 'mi_cora.db');
 
     return await openDatabase(
       path,
@@ -34,7 +34,6 @@ class DatabaseHelper {
           categoria TEXT
         );
         ''');
-        //icono TEXT NOT NULL
       },
     );
   }
