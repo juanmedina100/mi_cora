@@ -1,13 +1,13 @@
-// import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 
 class CategorieModel {
   final int id;
   final String nombre;
-  // final IconData icono;
+  final String icono;
   
   CategorieModel({
     required this.id,
     required this.nombre,
-    // required this.icono,
+    required this.icono,
     });
 }

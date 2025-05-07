@@ -23,17 +23,38 @@ class _MyAppMainState extends State<MyAppMain> {
       ],
       builder: (context,_) {
         return MaterialApp(
-          title: 'Mi Cora',
+          // title: 'Mi Cora',
           debugShowCheckedModeBanner: false,
           theme: ThemeData(
             useMaterial3: true,
+            colorScheme: ColorScheme.fromSeed(
+              seedColor: Colors.deepPurple,
+              primary: const Color.fromRGBO(23, 107, 135, 100),
+              secondary: Colors.blueAccent,
+              background: Colors.white,
+              surface: Colors.white,
+
+            ),
+            bottomAppBarTheme: const BottomAppBarTheme(
+              color: Colors.blue,
+              elevation: 3,
+              shape: CircularNotchedRectangle(),
+            ),
+            appBarTheme: const AppBarTheme(
+              backgroundColor: Colors.blue,
+              foregroundColor: Colors.white,
+              centerTitle: true,
+              elevation: 0,
+            ),
+            cardTheme: const CardTheme(
+              color: Colors.white,
+              margin: EdgeInsets.all(5),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(Radius.circular(10)),
+              ),
+            ),
           ),
           home: Scaffold(
-            appBar: AppBar(
-              backgroundColor: Colors.blue,
-              title: const Text('Mi Cora'),
-              centerTitle: true,
-            ),
             body: HomeScreen(),
           ),
         );
