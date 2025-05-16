@@ -41,4 +41,6 @@ De esa forma segun lo que se este agregando o modificando debe llevar ese titulo
 ![repo](images/gitclone.jpg)
 
 
+# NOTA
 
+Si por comodidad quieres hacer la contribución de forma personal cominucate por el repo para coordinar aportaciones.
