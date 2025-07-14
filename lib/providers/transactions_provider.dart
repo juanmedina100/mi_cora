@@ -10,6 +10,8 @@ class TransactionProvider with ChangeNotifier {
   List<TransactionModel> _transactions = [];
   List<TransactionFiltered> _transactionsFiltered = [];
   List<TransactionFiltered> get transactionsFiltered => _transactionsFiltered;
+  List<TransactionFiltered> _transactionsFilteredDay = [];
+  List<TransactionFiltered> get transactionsFilteredDay => _transactionsFilteredDay;
 
   TransactionModel? _selectedTransaction;
   TransactionModel? get selectedTransaction => _selectedTransaction;
@@ -32,6 +34,21 @@ class TransactionProvider with ChangeNotifier {
       _transactionsFiltered = await obtenerTransaccionesUltimos6Meses();
       _calculateTotalExpenses();
       debugPrint("Transacciones filtradas__provider__: $_transactionsFiltered");
+      _isLoading = false;
+      notifyListeners();
+    } catch (e) {
+      debugPrint('Error al cargar transacciones filtradas: $e');
+    }
+  }
+
+  Future<void> LoadFilteredTransactionsDay() async {
+  debugPrint("Cargando transacciones filtradas...");
+  try {
+    _isLoading = true;
+      // debugPrint("Cargando transacciones filtradas...debugPrint");
+      _transactionsFilteredDay = await obtenerTransaccionesPorDia();
+      _calculateTotalExpenses();
+      // debugPrint("Transacciones filtradas__provider__: $_transactionsFilteredDay");
       _isLoading = false;
       notifyListeners();
     } catch (e) {

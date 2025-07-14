@@ -42,6 +42,28 @@ Future<List<TransactionFiltered>> obtenerTransaccionesUltimos6Meses() async {
   // return resultado;
 }
 
+//Transacciones Diarias
+Future<List<TransactionFiltered>> obtenerTransaccionesPorDia() async {
+  final db = await DatabaseHelper().database;
+  final List<Map<String, dynamic>> maps = await db.rawQuery(
+    '''
+    SELECT strftime('%Y-%m-%d', fecha) AS fecha_dia, SUM(monto) AS total_monto
+    FROM transacciones
+    WHERE fecha >= date('now', '-6 months')
+    GROUP BY fecha_dia
+    ORDER BY fecha_dia DESC
+    LIMIT 7
+    '''
+  );
+  return List.generate(maps.length, (i) {
+    return TransactionFiltered(
+      periodo: maps[i]['fecha_dia'], // Ahora muestra la fecha exacta
+      totalGastos: maps[i]['total_monto'] as double,
+    );
+  });
+}
+
+
 
 
 Future<void> insertartransaccion(TransactionModelInsert transaccion) async {

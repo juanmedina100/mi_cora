@@ -25,7 +25,7 @@ class _HomeScreenState extends State<HomeScreen> {
     super.initState();
     final myProvider = Provider.of<TransactionProvider>(context, listen: false);
     myProvider.loadTransactions();
-    myProvider.LoadFilteredTransactions();
+    myProvider.LoadFilteredTransactionsDay();
   }
 
   @override
@@ -77,7 +77,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           tooltipBehavior: TooltipBehavior(enable: true),
                           series: <CartesianSeries<TransactionFiltered, String>>[
                             ColumnSeries<TransactionFiltered, String>(
-                              dataSource: myProvider.transactionsFiltered,
+                              dataSource: myProvider.transactionsFilteredDay,
                               xValueMapper: (TransactionFiltered sales, _) => sales.periodo,
                               yValueMapper: (TransactionFiltered sales, _) => sales.totalGastos,
                               name: 'Gastos',

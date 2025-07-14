@@ -54,17 +54,17 @@ class _MyAppMainState extends State<MyAppMain> {
               centerTitle: true,
               elevation: 0,
             ),
-            cardTheme: const CardTheme(
-              color: Colors.white,
-              margin: EdgeInsets.all(5),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.all(Radius.circular(10)),
-              ),
-            ),
-          ),
+          //   cardTheme: const CardTheme(
+          //     color: Colors.white,
+          //     margin: EdgeInsets.all(5),
+          //     shape: RoundedRectangleBorder(
+          //       borderRadius: BorderRadius.all(Radius.circular(10)),
+          //     ),
+          //   ),
+          // ),
           // home: Scaffold(
           //   body: HomeScreen(),
-          // ),
+          ),
         );
       }
     );
